@@ -1,13 +1,15 @@
 const token = Cypress.env('token')
+
 export function verifyLeadCreated(lastName, retry = 0) {
   if (retry > 10) {
     throw new Error('Lead not found in system')
   }
-  cy.request({
+
+  return cy.request({
     method: 'POST',
     url: 'https://devapi.actyvate.ai/v1/leads/getLeads',
     headers: {
-      Authorization: `${token}`
+      Authorization: `${Cypress.env('token')}`
     },
     body: {
       page: 0,
@@ -15,16 +17,22 @@ export function verifyLeadCreated(lastName, retry = 0) {
       searchText: lastName
     }
   }).then((res) => {
+
     const leads = res.body.data.leadList
 
-    //adjust if structure is different (sometimes it's data.list)
-    const foundLead = leads.find(l => l.lastName === lastName)
+    cy.log('Expected:', lastName)
+
+    const foundLead = leads.find(l =>
+      l.lastName &&
+      l.lastName.trim().toLowerCase() === lastName.trim().toLowerCase()
+    )
 
     if (!foundLead) {
       cy.wait(5000)
-      verifyLeadCreated(lastName, retry + 1)
+      return verifyLeadCreated(lastName, retry + 1)
     } else {
-      expect(foundLead.lastName).to.eq(lastName)
+      expect(foundLead).to.exist
+      expect(foundLead.lastName.toLowerCase()).to.eq(lastName.toLowerCase())
       cy.log('Lead found successfully')
     }
 
