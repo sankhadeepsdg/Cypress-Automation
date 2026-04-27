@@ -1,0 +1,18 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "generateToken.js",
+  "scripts": {
+    "start": "node generateToken.js",
+    "test:gmail": "node testGmail.js",
+    "send:email": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "googleapis": "^171.4.0",
+    "open": "^11.0.0"
+  }
+}

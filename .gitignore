@@ -1,0 +1,6 @@
+node_modules
+/node_modules
+node_modules/
+.env
+cypress.env.json
+client_secret_apps.googleusercontent.com.json
