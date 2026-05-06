@@ -15,5 +15,9 @@ export const API_ROUTES = {
   CAMPAIGN_DASHBOARD: '/outbound/campaigndDashboard',
 
   // Lead APIs
-  GET_LEADS: '/leads/getLeads'
+  GET_LEADS: '/leads/getLeads',
+
+  //Lead Tags
+  GET_TAGS_UNDER_CLIENT: '/admin/getTagsUnderClient',
+  UPDATE_LEAD_TAGS: '/leads/updateLeadTags'
 };

@@ -1,5 +1,19 @@
 import { API_BASE_URL, API_ROUTES } from '../config/apiRoutes';
+import { LEAD_STATUS } from '../config/constants';
+
 const token = Cypress.env('token');
+
+export function getRandomLeadStatus(currentStatus) {
+
+  const allStatuses = Object.values(LEAD_STATUS);
+
+  //Remove current status
+  const filteredStatuses = allStatuses.filter(status => status !== currentStatus);
+
+  // Pick random
+  const randomIndex = Math.floor(Math.random() * filteredStatuses.length);
+  return filteredStatuses[randomIndex];
+}
 
 export function updateLeadStatus(leadId, leadStatus) {
   return cy.request({

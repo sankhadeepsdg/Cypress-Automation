@@ -1,4 +1,4 @@
-export const Lead_Status = {
+export const LEAD_STATUS = {
     NOT_CONTACTED: "Not Contacted Yet",
     INITIAL_ENGAGEMENT: "Initial Engagement",
     MEETING_SCHEDULED: "Meeting Scheduled",
