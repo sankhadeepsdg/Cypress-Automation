@@ -1,9 +1,11 @@
+import { API_BASE_URL, API_ROUTES } from '../config/apiRoutes';
+
 export function getRandomRepresentative(clientId, currentAssignedUserId) {
   const token = Cypress.env('token');
 
   return cy.request({
     method: 'POST',
-    url: 'https://devapi.actyvate.ai/v1/admin/getUserListUnderClient',
+    url: `${API_BASE_URL}${API_ROUTES.GET_USERS_UNDER_CLIENT}`,
     headers: {
       Authorization: token
     },

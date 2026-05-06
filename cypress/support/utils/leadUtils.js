@@ -1,3 +1,5 @@
+import { API_BASE_URL, API_ROUTES } from '../config/apiRoutes';
+
 //verifyLeadCreated
 const token = Cypress.env('token')
 
@@ -8,7 +10,7 @@ export function verifyLeadCreated(lastName, retry = 0) {
 
   return cy.request({
     method: 'POST',
-    url: 'https://devapi.actyvate.ai/v1/leads/getLeads',
+    url: `${API_BASE_URL}${API_ROUTES.GET_LEADS}`,
     headers: {
       Authorization: `${token}`
     },

@@ -1,9 +1,10 @@
+import { API_BASE_URL, API_ROUTES } from "../config/apiRoutes";
 const token = Cypress.env('token');
 
 export function reallocateLead(leadId, userId) {
   return cy.request({
     method: 'POST',
-    url: 'https://devapi.actyvate.ai/v1/leads/reallocateLead',
+    url: `${API_BASE_URL}${API_ROUTES.REALLOCATE_LEAD}`,
     headers: {
       Authorization: token
     },

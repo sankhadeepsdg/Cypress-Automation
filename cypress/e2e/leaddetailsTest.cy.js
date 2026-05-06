@@ -1,7 +1,7 @@
 import { getLeadDetails } from '../support/utils/leadDetailsUtils.js';
 import { getRandomRepresentative } from '../support/utils/userUtils.js';
 import { updateLeadStatus } from '../support/utils/leadStatusUpdateUtils.js';
-import { Lead_Status } from '../support/utils/constants.js';
+import { Lead_Status } from '../support/config/constants.js';
 import { reallocateLead } from '../support/utils/assignRepresentative.js';
 
 describe('Lead Flow - Assign Random Representative', () => {

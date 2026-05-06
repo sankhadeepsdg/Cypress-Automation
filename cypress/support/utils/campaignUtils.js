@@ -1,9 +1,10 @@
+import { API_BASE_URL, API_ROUTES } from "../config/apiRoutes";
 const token = Cypress.env('token')
 
 export function createCampaign(payload) {
   return cy.request({
     method: 'POST',
-    url: 'https://devapi.actyvate.ai/v1/outbound/createCampaign',
+    url: `${API_BASE_URL}${API_ROUTES.CREATE_CAMPAIGN}`,
     headers: {
       Authorization: `${token}`
     },
@@ -18,7 +19,7 @@ export function checkCampaignStatus(campaignName, retry = 0) {
     
     return cy.request({
         method: 'POST',
-        url: 'https://devapi.actyvate.ai/v1/outbound/campaigndDashboard',
+        url: `${API_BASE_URL}${API_ROUTES.CAMPAIGN_DASHBOARD}`,
         headers: {
             Authorization: `${token}`
         },

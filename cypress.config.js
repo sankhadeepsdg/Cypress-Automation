@@ -51,5 +51,8 @@ module.exports = defineConfig({
     baseUrl: "https://dev.actyvate.ai",  // Updated base URL
     screenshotOnRunFailure: true,
     retries: { runMode: 2, openMode: 0 },
+  },
+  env: {
+    apiUrl: 'https://devapi.actyvate.ai/v1'
   }
 });

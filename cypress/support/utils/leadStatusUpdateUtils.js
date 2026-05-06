@@ -1,9 +1,10 @@
+import { API_BASE_URL, API_ROUTES } from '../config/apiRoutes';
 const token = Cypress.env('token');
 
 export function updateLeadStatus(leadId, leadStatus) {
   return cy.request({
     method: 'POST',
-    url: 'https://devapi.actyvate.ai/v1/leads/updateLeadStatus',
+    url: `${API_BASE_URL}${API_ROUTES.UPDATE_LEAD_STATUS}`,
     headers: {
       Authorization: token
     },
