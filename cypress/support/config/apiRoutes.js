@@ -19,5 +19,10 @@ export const API_ROUTES = {
 
   //Lead Tags
   GET_TAGS_UNDER_CLIENT: '/admin/getTagsUnderClient',
-  UPDATE_LEAD_TAGS: '/leads/updateLeadTags'
+  UPDATE_LEAD_TAGS: '/leads/updateLeadTags',
+
+  //Lead Notes
+  ADD_LEAD_NOTES: '/leads/addNotes',
+  GET_LEAD_NOTES: '/leads/getNotes',
+  DELETE_LEAD_NOTES: '/leads/deleteNotes'
 };

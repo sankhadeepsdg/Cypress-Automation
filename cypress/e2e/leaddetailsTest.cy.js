@@ -3,6 +3,7 @@ import { getRandomRepresentative } from '../support/utils/userUtils.js';
 import { getRandomLeadStatus, updateLeadStatus } from '../support/utils/leadStatusUpdateUtils.js';
 import { reallocateLead } from '../support/utils/assignRepresentative.js';
 import { getTagsUnderClient, updateLeadTags } from '../support/utils/tagUtils.js';
+import { addLeadNotes } from '../support/utils/noteUtils.js';
 
 import { LEAD_STATUS } from '../support/config/constants.js';
 
@@ -26,7 +27,7 @@ describe('Lead Flow - Assign Random Representative', () => {
 
             clientId = lead.clientId;
             currentLeadStatus = lead.leadStatus;
-            
+
             const currentUserId = lead.assignedUserId;
 
             // Step 2: Get Random Representative
@@ -74,7 +75,17 @@ describe('Lead Flow - Assign Random Representative', () => {
 
             cy.log('Lead tags updated successfully');
 
-        });
+            return addLeadNotes(
+                leadId,
+                'The lead has been modified manually.'
+            );
+
+        })
+            .then(() => {
+
+                cy.log('Lead notes added successfully');
+
+            });
 
     });
 
