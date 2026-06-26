@@ -13,7 +13,6 @@ export function reallocateLead(leadId, userId) {
       userId
     }
   }).then((res) => {
-
     expect(res.status).to.eq(200);
     expect(res.body.meta.status).to.eq(true);
 

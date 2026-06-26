@@ -3,7 +3,7 @@ import { getRandomRepresentative } from '../support/utils/userUtils.js';
 import { getRandomLeadStatus, updateLeadStatus } from '../support/utils/leadStatusUpdateUtils.js';
 import { reallocateLead } from '../support/utils/assignRepresentative.js';
 import { getTagsUnderClient, updateLeadTags } from '../support/utils/tagUtils.js';
-import { addLeadNotes } from '../support/utils/noteUtils.js';
+import { addLeadNotes, getLeadNotes, deleteLeadNotes } from '../support/utils/noteUtils.js';
 
 import { LEAD_STATUS } from '../support/config/constants.js';
 
@@ -11,6 +11,7 @@ describe('Lead Flow - Assign Random Representative', () => {
     it('should fetch lead and assign new representative', () => {
 
         const leadId = 4840; // Example lead ID
+        const noteContent = 'The lead has been modified manually.';
         let clientId; // Declare clientId to be used across promises
         let currentLeadStatus;
 
@@ -75,16 +76,29 @@ describe('Lead Flow - Assign Random Representative', () => {
 
             cy.log('Lead tags updated successfully');
 
-            return addLeadNotes(
-                leadId,
-                'The lead has been modified manually.'
-            );
+            // Step 6: Add Lead Notes
 
+            return addLeadNotes(leadId, noteContent);
         })
             .then(() => {
 
                 cy.log('Lead notes added successfully');
+                return getLeadNotes(leadId);
 
+            })
+            .then((notesData) => {
+                cy.log(`Lead Notes: ${JSON.stringify(notesData)}`)
+
+                const notesList = notesData.notesList
+                const latestNote = notesList[notesList.length - 1]
+
+                expect(latestNote.notes).to.eq(noteContent)
+
+                return deleteLeadNotes(latestNote.notesId);
+
+            })
+            .then(() => {
+                cy.log('Lead notes deleted successfully');
             });
 
     });

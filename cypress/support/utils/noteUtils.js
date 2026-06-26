@@ -1,8 +1,6 @@
 import { API_BASE_URL, API_ROUTES } from '../config/apiRoutes';
 const token = Cypress.env('token')
 
-const noteContent = 'The lead has been modified manually.';
-
 export function addLeadNotes(leadId, noteContent) {
     return cy.request({
         method: 'POST',
@@ -40,7 +38,7 @@ export function getLeadNotes(leadId) {
     
 }
 
-export function deleteLeadNotes(noteId) {
+export function deleteLeadNotes(notesId) {
     return cy.request({
         method: 'POST',
         url: `${API_BASE_URL}${API_ROUTES.DELETE_LEAD_NOTES}`,
@@ -48,7 +46,7 @@ export function deleteLeadNotes(noteId) {
             Authorization: token
         },
         body: {
-            noteId
+            notesId
         }
     }).then((res) => {
         expect(res.status).to.eq(200);
