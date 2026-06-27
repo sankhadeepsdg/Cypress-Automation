@@ -1,3 +1,6 @@
+import { API_BASE_URL, API_ROUTES } from '../config/apiRoutes';
+
+//verifyLeadCreated
 const token = Cypress.env('token')
 
 export function verifyLeadCreated(lastName, retry = 0) {
@@ -7,9 +10,9 @@ export function verifyLeadCreated(lastName, retry = 0) {
 
   return cy.request({
     method: 'POST',
-    url: 'https://devapi.actyvate.ai/v1/leads/getLeads',
+    url: `${API_BASE_URL}${API_ROUTES.GET_LEADS}`,
     headers: {
-      Authorization: `${Cypress.env('token')}`
+      Authorization: `${token}`
     },
     body: {
       page: 0,
@@ -28,11 +31,11 @@ export function verifyLeadCreated(lastName, retry = 0) {
     if (!foundLead) {
       cy.wait(5000)
       return verifyLeadCreated(lastName, retry + 1)
-    } else {
-      expect(foundLead).to.exist
-      expect(foundLead.lastName.toLowerCase()).to.eq(lastName.toLowerCase())
-      cy.log('Lead found successfully')
     }
+    expect(foundLead).to.exist
+    expect(foundLead.lastName.toLowerCase()).to.eq(lastName.toLowerCase())
+    cy.log('Lead found successfully')
 
+    return cy.wrap(foundLead.leadId)
   })
 }

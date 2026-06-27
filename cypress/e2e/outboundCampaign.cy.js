@@ -99,28 +99,34 @@ describe('Actyvate Outbound Campaign Automation', () => {
           } else {
             expect(campaign.status).to.eq('completed')
 
-            cy.then(() => {
-              return verifyLeadCreated(uniqueLastName)
-            })
+            verifyLeadCreated(uniqueLastName)
+              .then(() => {
 
-            // 6. Wait 1 minute before checking Gmail
-            cy.wait(60000)
-            // 7. Search campaign email and reply
-            cy.task('replyCampaignEmail', {
-              subject: campaign_subject
-            }).then((msg) => {
-              cy.log(msg)
-            })
+                cy.wait(20000)
 
+                return cy.task('replyAndCheckAI', {
+                  subject: campaign_subject
+                })
+
+              })
+              .then((reply) => {
+
+                cy.log('AI Response:')
+                cy.log(reply)
+
+                expect(reply).to.include('Hi Mario')
+
+              })
           }
 
-        })
+        }) //closes cy.request.then
 
-      }
+      } //closes function
 
       // Start polling
       checkCampaignStatus()
-    })
+
+    }) //closes createCampaign.then
 
   })
 
