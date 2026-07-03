@@ -1,0 +1,44 @@
+{
+  "step": "Campaign Creation",
+  "expectedResult": "Campaign should be created successfully",
+  "requestPayload": {
+    "clientId": 13,
+    "botId": 176,
+    "campaignName": "Summer Outbound Campaign 1783001663966",
+    "campaignChannel": [
+      "email"
+    ],
+    "leadUploadSource": "manual",
+    "messageStratergy": "manual",
+    "emailSubject": "Welcome to our outbound campaign",
+    "emailBody": "Hi {{first_name}}, welcome!",
+    "messageBody": "Hello {{first_name}}!",
+    "messageContext": "We met all these leads at the RC Trade Show. They visited our booth and showed interest in our accounting and bookkeeping services. The goal is to get them to book a 15-minute intro call. \nRegards\nAutomation.",
+    "assignUserList": [
+      154
+    ],
+    "startTime": "2026-07-02 19:46",
+    "whatsappTemplateId": null,
+    "timezone": "India Standard Time",
+    "leadList": [
+      {
+        "firstName": "Mario",
+        "lastName": "User_1783001663966",
+        "emailId": "testgwbspprt@gmail.com",
+        "phoneNo": "+918337047513",
+        "oldLeadId": null,
+        "message": "This is a test lead for outbound campaign",
+        "notes": "Car Insurance Lead"
+      }
+    ]
+  },
+  "response": {
+    "meta": {
+      "status": true,
+      "message": "Campaign created sucessfully.",
+      "code": 200
+    },
+    "data": {}
+  },
+  "status": "Passed"
+}

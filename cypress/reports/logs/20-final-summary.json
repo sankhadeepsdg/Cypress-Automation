@@ -1,0 +1,33 @@
+{
+  "project": "Actyvate AI",
+  "module": "Outbound Campaign Automation",
+  "testSuite": "Actyvate Outbound Campaign Automation",
+  "testCase": "End-to-End Flow",
+  "environment": "Dev",
+  "status": "Passed",
+  "testStartedAt": "2026-07-02T14:14:23.966Z",
+  "testCompletedAt": "2026-07-02T14:18:53.380Z",
+  "campaignName": "Summer Outbound Campaign 1783001663966",
+  "leadId": 4878,
+  "clientId": 13,
+  "newRepresentativeId": 204,
+  "selectedLeadStatus": "Meeting Scheduled",
+  "selectedTag": "VIP",
+  "validations": [
+    "Campaign created successfully",
+    "Campaign dashboard verified",
+    "Lead created successfully",
+    "AI reply validated",
+    "Timeline events validated",
+    "Lead details validated",
+    "Representative selected",
+    "Representative reassigned",
+    "Lead status updated",
+    "Client tags fetched",
+    "Lead tag updated",
+    "Lead note added successfully",
+    "Lead note verified successfully",
+    "Lead note deleted successfully"
+  ],
+  "evidenceFilesLocation": "cypress/reports/logs"
+}

@@ -1,0 +1,10 @@
+{
+  "step": "Lead Creation Verification",
+  "expectedResult": "Lead should be created from outbound campaign",
+  "leadId": 4878,
+  "campaignName": "Summer Outbound Campaign 1783001663966",
+  "leadFirstName": "Mario",
+  "leadLastName": "User_1783001663966",
+  "emailSubject": "Welcome to our outbound campaign",
+  "status": "Passed"
+}

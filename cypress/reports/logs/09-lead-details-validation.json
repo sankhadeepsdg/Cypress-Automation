@@ -1,0 +1,8 @@
+{
+  "step": "Lead Details Validation",
+  "expectedResult": "Lead details should contain leadId, clientId, and assignedUserId",
+  "leadIdExists": true,
+  "clientIdExists": true,
+  "assignedUserIdExists": true,
+  "status": "Passed"
+}

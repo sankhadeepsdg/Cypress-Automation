@@ -1,0 +1,15 @@
+{
+  "step": "Timeline Event Validation",
+  "expectedResult": "Timeline should include system received, auto allocation, and engagement start events",
+  "requiredEvents": [
+    "leadReceivedBySystem",
+    "automaticAllocation",
+    "leadStartedEngaging"
+  ],
+  "actualEvents": [
+    "leadReceivedBySystem",
+    "automaticAllocation",
+    "leadStartedEngaging"
+  ],
+  "status": "Passed"
+}

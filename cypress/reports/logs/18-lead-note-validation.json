@@ -1,0 +1,8 @@
+{
+  "step": "Lead Note Validation",
+  "expectedResult": "Latest note text should match the added note content",
+  "expectedNote": "The lead has been modified manually.",
+  "actualNote": "The lead has been modified manually.",
+  "notesId": 231,
+  "status": "Passed"
+}

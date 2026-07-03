@@ -1,0 +1,7 @@
+{
+  "step": "Delete Lead Note",
+  "expectedResult": "Lead note should be deleted successfully",
+  "leadId": 4878,
+  "notesId": 231,
+  "status": "Passed"
+}

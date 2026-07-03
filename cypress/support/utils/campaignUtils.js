@@ -13,7 +13,7 @@ export function createCampaign(payload) {
 }
 
 export function checkCampaignStatus(campaignName, retry = 0) {
-    if (retry > 20) {
+    if (retry > 25) {
         throw new Error('Campaign did not complete within expected time')
     }
     

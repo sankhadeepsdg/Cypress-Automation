@@ -1,0 +1,16 @@
+{
+  "step": "Get Tags Under Client",
+  "expectedResult": "Tags should be available under client",
+  "clientId": 13,
+  "availableTags": {
+    "leadTags": [
+      "VIP",
+      "General",
+      "Sponsor",
+      "Affiliate",
+      "Clinic"
+    ]
+  },
+  "selectedTag": "VIP",
+  "status": "Passed"
+}

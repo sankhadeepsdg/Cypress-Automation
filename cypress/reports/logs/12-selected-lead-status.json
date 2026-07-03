@@ -1,0 +1,7 @@
+{
+  "step": "Lead Status Selection",
+  "expectedResult": "A new lead status should be selected",
+  "leadId": 4878,
+  "previousStatus": "Initial Engagement",
+  "selectedStatus": "Meeting Scheduled"
+}

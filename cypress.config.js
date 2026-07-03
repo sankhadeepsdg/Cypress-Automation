@@ -1,16 +1,26 @@
 require('dotenv').config()
-const { defineConfig } = require("cypress");
-const { getEmailWithRetry, replyToEmail } = require('./gmailTest/gmail');
+
+const { defineConfig } = require('cypress')
+const { getEmailWithRetry, replyToEmail } = require('./gmailTest/gmail')
 const { waitForAIReply } = require('./gmailTest/aiReply')
 
 module.exports = defineConfig({
+  reporter: 'mochawesome',
+  reporterOptions: {
+    reportDir: 'cypress/reports/mochawesome',
+    overwrite: false,
+    html: false,
+    json: true,
+    timestamp: 'mmddyyyy_HHMMss'
+  },
+
   e2e: {
-    taskTimeout: 180000, // 3 minutes
+    taskTimeout: 180000,
+
     setupNodeEvents(on, config) {
       config.env.token = process.env.TOKEN
 
       on('task', {
-
         async replyAndCheckAI({ subject }) {
           try {
             console.log('Fetching email from Gmail...')
@@ -35,24 +45,36 @@ module.exports = defineConfig({
 
             // Step 5: Return AI reply to Cypress
             return aiReply
-
           } catch (error) {
             console.error('Error in Gmail task:', error)
             throw error
           }
         }
-
       })
+
       return config
     },
-    specPattern: "cypress/e2e/**/*.cy.js", // Supports subfolders & .js files
+
+    specPattern: 'cypress/e2e/**/*.cy.js',
+
     viewportHeight: 1080,
     viewportWidth: 1920,
-    baseUrl: "https://dev.actyvate.ai",  // Updated base URL
+
+    baseUrl: 'https://dev.actyvate.ai',
+
+    screenshotsFolder: 'cypress/screenshots',
+    videosFolder: 'cypress/videos',
+
+    video: true,
     screenshotOnRunFailure: true,
-    retries: { runMode: 2, openMode: 0 },
+
+    retries: {
+      runMode: 2,
+      openMode: 0
+    }
   },
+
   env: {
     apiUrl: 'https://devapi.actyvate.ai/v1'
   }
-});
+})

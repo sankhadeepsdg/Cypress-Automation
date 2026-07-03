@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "cypress open"
+    "start": "cypress open",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:outbound": "cypress run --spec \"cypress/e2e/outboundCampaign_2.cy.js\"",
+    "report:merge": "mochawesome-merge \"cypress/reports/mochawesome/*.json\" > cypress/reports/mochawesome.json",
+    "report:generate": "marge cypress/reports/mochawesome.json --reportDir cypress/reports/final --inline",
+    "test:report": "npm run cy:run && npm run report:merge && npm run report:generate",
+    "test:report:outbound": "npm run cy:run:outbound && npm run report:merge && npm run report:generate"
   },
   "keywords": [],
   "author": "",
@@ -12,10 +19,13 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "googleapis": "^171.4.0",
-    "open": "^11.0.0",
+    "open": "^1.0.0",
     "papaparse": "^5.5.3"
   },
   "devDependencies": {
-    "cypress": "^15.14.1"
+    "cypress": "^14.5.4",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2"
   }
 }

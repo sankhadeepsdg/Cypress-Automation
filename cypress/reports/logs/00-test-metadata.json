@@ -1,0 +1,12 @@
+{
+  "project": "Actyvate AI",
+  "module": "Outbound Campaign Automation",
+  "testSuite": "Actyvate Outbound Campaign Automation",
+  "testCase": "End-to-End Flow",
+  "environment": "Dev",
+  "apiBaseUrl": "https://devapi.actyvate.ai/v1",
+  "testStartedAt": "2026-07-02T14:14:23.966Z",
+  "campaignName": "Summer Outbound Campaign 1783001663966",
+  "emailSubject": "Welcome to our outbound campaign",
+  "leadName": "Mario User_1783001663966"
+}
