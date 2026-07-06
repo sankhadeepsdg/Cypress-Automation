@@ -1,12 +1,12 @@
 {
   "step": "Get Lead Notes",
   "expectedResult": "Recently added note should be available in lead notes list",
-  "leadId": 4878,
+  "leadId": 4879,
   "notesResponse": {
     "notesList": [
       {
-        "notesId": 231,
-        "createdAt": "2026-07-02T14:18:50.000Z",
+        "notesId": 232,
+        "createdAt": "2026-07-06T08:07:11.000Z",
         "notes": "The lead has been modified manually.",
         "userId": 1,
         "userName": "rakesh_b",
@@ -16,8 +16,8 @@
     ]
   },
   "latestNote": {
-    "notesId": 231,
-    "createdAt": "2026-07-02T14:18:50.000Z",
+    "notesId": 232,
+    "createdAt": "2026-07-06T08:07:11.000Z",
     "notes": "The lead has been modified manually.",
     "userId": 1,
     "userName": "rakesh_b",

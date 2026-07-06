@@ -5,8 +5,8 @@
   "testCase": "End-to-End Flow",
   "environment": "Dev",
   "apiBaseUrl": "https://devapi.actyvate.ai/v1",
-  "testStartedAt": "2026-07-02T14:14:23.966Z",
-  "campaignName": "Summer Outbound Campaign 1783001663966",
+  "testStartedAt": "2026-07-06T08:02:23.264Z",
+  "campaignName": "Summer Outbound Campaign 1783324943264",
   "emailSubject": "Welcome to our outbound campaign",
-  "leadName": "Mario User_1783001663966"
+  "leadName": "Mario User_1783324943264"
 }

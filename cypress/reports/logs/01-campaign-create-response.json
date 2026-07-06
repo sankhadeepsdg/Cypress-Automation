@@ -4,7 +4,7 @@
   "requestPayload": {
     "clientId": 13,
     "botId": 176,
-    "campaignName": "Summer Outbound Campaign 1783001663966",
+    "campaignName": "Summer Outbound Campaign 1783324943264",
     "campaignChannel": [
       "email"
     ],
@@ -17,13 +17,13 @@
     "assignUserList": [
       154
     ],
-    "startTime": "2026-07-02 19:46",
+    "startTime": "2026-07-06 13:34",
     "whatsappTemplateId": null,
     "timezone": "India Standard Time",
     "leadList": [
       {
         "firstName": "Mario",
-        "lastName": "User_1783001663966",
+        "lastName": "User_1783324943264",
         "emailId": "testgwbspprt@gmail.com",
         "phoneNo": "+918337047513",
         "oldLeadId": null,
