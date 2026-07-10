@@ -15,6 +15,12 @@ describe('Lead Flow - Assign Random Representative', () => {
         let clientId; // Declare clientId to be used across promises
         let currentLeadStatus;
 
+        // Store the Phase 2 updated values for Phase 3 validation
+        let updatedRepresentativeId
+        let updatedLeadStatus
+        let updatedLeadTag
+        let deletedNoteId
+
         // Step 1: Get Lead Details
         getLeadDetails(leadId).then((lead) => {
 
@@ -40,67 +46,138 @@ describe('Lead Flow - Assign Random Representative', () => {
 
             // Optional validation
             expect(newUserId).to.not.be.null;
+            expect(newUserId).to.not.be.undefined;
+
+            // Store the selected representative for Phase 3
+            updatedRepresentativeId = newUserId;
+
+            cy.log(`New Representative: ${updatedRepresentativeId}`)
 
             // Assign new representative (dynamic)
-            return reallocateLead(leadId, newUserId);
+            return reallocateLead(leadId, updatedRepresentativeId)
 
         }).then(() => {
 
-            cy.log('Representative reassigned');
             // Assign representative API call here
+            cy.log('Representative reassigned successfully');
 
-            // Step 3: Update Lead Status
+
+            // Step 3: Select a different random lead status
             const randomStatus = getRandomLeadStatus(currentLeadStatus);
 
-            return updateLeadStatus(leadId, randomStatus);
+            // Store the selected status for Phase 3
+            updatedLeadStatus = randomStatus;
+
+            cy.log(`New Lead Status: ${updatedLeadStatus}`)
+
+            return updateLeadStatus(leadId, updatedLeadStatus);
 
         }).then(() => {
 
             cy.log('Lead status updated successfully');
 
-            //Step 4: Get Tags under Client
+            // Step 4: Get tags available under the client
             return getTagsUnderClient(clientId);
 
         }).then((tags) => {
 
-            cy.log(`Available Tags: ${JSON.stringify(tags)}`);
+            cy.log(`Available Tags: ${JSON.stringify(tags.leadTags)}`);
+
+            expect(tags).to.have.property('leadTags')
+            expect(tags.leadTags).to.be.an('array')
+            expect(tags.leadTags.length).to.be.greaterThan(0)
 
             // Example: pick first tag
             const selectedTag = tags.leadTags[0];
-            cy.log(`Selected Tag: ${selectedTag}`);
+
+            // Store the selected tag for Phase 3
+            updatedLeadTag = selectedTag
+
+            cy.log(`Selected Tag: ${updatedLeadTag}`);
 
             // Step 5: Update Lead Tags
-            return updateLeadTags(leadId, [selectedTag]);
+            return updateLeadTags(leadId, [updatedLeadTag]);
 
         }).then(() => {
 
             cy.log('Lead tags updated successfully');
 
             // Step 6: Add Lead Notes
-
             return addLeadNotes(leadId, noteContent);
-        })
-            .then(() => {
 
-                cy.log('Lead notes added successfully');
-                return getLeadNotes(leadId);
+        }).then(() => {
 
-            })
-            .then((notesData) => {
-                cy.log(`Lead Notes: ${JSON.stringify(notesData)}`)
+            cy.log('Lead notes added successfully');
+            return getLeadNotes(leadId);
 
-                const notesList = notesData.notesList
-                const latestNote = notesList[notesList.length - 1]
+        }).then((notesData) => {
+            cy.log(`Lead Notes: ${JSON.stringify(notesData)}`)
 
-                expect(latestNote.notes).to.eq(noteContent)
+            const notesList = notesData.notesList
+            const latestNote = notesList[notesList.length - 1]
 
-                return deleteLeadNotes(latestNote.notesId);
+            expect(latestNote.notes).to.eq(noteContent)
 
-            })
-            .then(() => {
-                cy.log('Lead notes deleted successfully');
-            });
+            deletedNoteId = latestNote.notesId;
+
+            // Step 7: Delete Lead Note
+            return deleteLeadNotes(deletedNoteId);
+
+        }).then(() => {
+            cy.log('Lead notes deleted successfully');
+
+            // Step 8: Verify note deletion
+            return getLeadNotes(leadId)
+
+        }).then((notesData) => {
+            const notesList = notesData.notesList
+            const deletedNoteStillExists = notesList.some(note => note.notesId === deletedNoteId)
+
+            expect(deletedNoteStillExists).to.be.false;
+
+            // Values now available for Phase 3 validation
+            cy.log(`Expected Representative ID: ${updatedRepresentativeId}`)
+            cy.log(`Expected Lead Status: ${updatedLeadStatus}`)
+            cy.log(`Expected Lead Tag: ${updatedLeadTag}`)
+            cy.log(`Deleted Note ID: ${deletedNoteId}`)
+            cy.log('Phase 2 completed successfully')
+
+            // Phase 3 - Step 1: Fetch latest lead details
+            return getLeadDetails(leadId);
+
+        }).then((updatedLead) => {
+
+            // Phase 3 - Step 2: Validate updated representative
+            expect(updatedLead.assignedUserId).to.eq(updatedRepresentativeId);
+
+            cy.log(`Validated Representative ID: ${updatedLead.assignedUserId}`)
+
+            // Phase 3 - Step 3: Validate updated lead status
+            expect(updatedLead.leadStatus).to.eq(updatedLeadStatus);
+
+            cy.log(`Validated Lead Status: ${updatedLead.leadStatus}`)
+
+            // Phase 3 - Step 4: Validate updated lead tags
+            expect(updatedLead.leadTags).to.include(updatedLeadTag);
+
+            cy.log(`Lead tag verified: ${updatedLeadTag}`)
+
+            //Phase 3 - Step 5: Validate lead timeline
+            const timelineTypes = updatedLead.timelineList.map(item => item.type);
+
+            expect(timelineTypes).to.include('manualAllocation')
+            expect(timelineTypes).to.include('leadStatusChange')
+
+            cy.log(`Timeline Events: ${timelineTypes.join(', ')}`)
+            cy.log('Phase 3 completed successfully')
+
+        });
 
     });
+}); 
 
-});
+
+
+
+
+
