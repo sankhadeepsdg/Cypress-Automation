@@ -5,7 +5,7 @@ const { waitForAIReply } = require('./gmailTest/aiReply')
 
 module.exports = defineConfig({
   e2e: {
-    taskTimeout: 180000, // 3 minutes
+    taskTimeout: 300000, // 5 minutes
     setupNodeEvents(on, config) {
       config.env.token = process.env.TOKEN
 
