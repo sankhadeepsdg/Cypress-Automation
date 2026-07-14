@@ -1,11 +1,9 @@
 const { google } = require('googleapis')
 
-// Replace these with your actual values
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN
 
-//Setup OAuth
 const auth = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
@@ -16,9 +14,11 @@ auth.setCredentials({
   refresh_token: REFRESH_TOKEN
 })
 
-const gmail = google.gmail({ version: 'v1', auth })
+const gmail = google.gmail({
+  version: 'v1',
+  auth
+})
 
-// Function: Get campaign email by subject
 async function getCampaignEmail(subject) {
   const res = await gmail.users.messages.list({
     userId: 'me',
@@ -29,10 +29,10 @@ async function getCampaignEmail(subject) {
   const messages = res.data.messages
 
   if (!messages || messages.length === 0) {
-    throw new Error('No campaign emails found')
+    throw new Error(`No campaign email found for subject: ${subject}`)
   }
 
-  console.log(`Found ${messages.length} matching emails`)
+  console.log(`Found ${messages.length} matching email(s)`)
 
   const message = await gmail.users.messages.get({
     userId: 'me',
@@ -42,54 +42,77 @@ async function getCampaignEmail(subject) {
   return message.data
 }
 
-// Function: Reply to email in same thread
-async function replyToEmail(message, subject) {
-  const threadId = message.threadId
+async function getEmailWithRetry(
+  subject,
+  retries = 12,
+  interval = 5000
+) {
+  let lastError
 
-  // Extract sender email (so reply goes correctly)
-  const headers = message.payload.headers
-  const fromHeader = headers.find(h => h.name === 'From')
-  const recipient = fromHeader.value
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      console.log(
+        `Attempt ${attempt}/${retries}: Searching for campaign email...`
+      )
+
+      return await getCampaignEmail(subject)
+    } catch (error) {
+      lastError = error
+
+      if (attempt < retries) {
+        console.log(
+          `Email not found. Retrying in ${interval / 1000} seconds...`
+        )
+
+        await new Promise(resolve =>
+          setTimeout(resolve, interval)
+        )
+      }
+    }
+  }
+
+  throw new Error(
+    `Email not found after ${retries} attempts. ${lastError?.message || ''}`
+  )
+}
+
+async function replyToEmail(message, subject) {
+  const headers = message.payload?.headers || []
+
+  const fromHeader = headers.find(
+    header => header.name.toLowerCase() === 'from'
+  )
+
+  if (!fromHeader?.value) {
+    throw new Error('Sender email was not found in the message headers')
+  }
 
   const rawMessage = [
-    `To: ${recipient}`,
+    `To: ${fromHeader.value}`,
     `Subject: Re: ${subject}`,
     '',
     'Yes, I am interested. Please share more details.'
-  ].join('\n')
+  ].join('\r\n')
 
   const encodedMessage = Buffer.from(rawMessage)
     .toString('base64')
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
+    .replace(/=+$/, '')
 
-  await gmail.users.messages.send({
+  const response = await gmail.users.messages.send({
     userId: 'me',
     requestBody: {
       raw: encodedMessage,
-      threadId: threadId
+      threadId: message.threadId
     }
   })
+
+  return response.data
 }
 
-// Function: Retry logic for email search
-async function getEmailWithRetry(subject, retries = 10) {
-  for (let i = 0; i < retries; i++) {
-    try {
-      console.log(`Attempt ${i + 1}: Searching email...`)
-      const email = await getCampaignEmail(subject)
-      return email
-    } catch (err) {
-      console.log('Email not found, retrying in 5 seconds...')
-      await new Promise(resolve => setTimeout(resolve, 5000))
-    }
-  }
-
-  throw new Error('Email not found after multiple retries')
-}
-
-//Export functions
 module.exports = {
+  getCampaignEmail,
   getEmailWithRetry,
   replyToEmail
 }
