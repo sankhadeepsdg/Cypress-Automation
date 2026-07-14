@@ -16,3 +16,10 @@ export const LEAD_STATUS = {
     OPT_OUT: "Opt-out",
     SPAM: "Spam"
 };
+
+export const CAMPAIGN_SUBJECT = 'Welcome to our outbound campaign'
+
+export const NOTE_CONTENT = {
+  FIRST_UPDATE: 'The lead has been modified manually.',
+  SECOND_UPDATE: 'The tag value has been updated.'
+};
