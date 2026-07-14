@@ -1,6 +1,6 @@
 {
   "step": "Get Tags Under Client",
-  "expectedResult": "Tags should be available under client",
+  "expectedResult": "Tags should be available under client and one new tag should be selected",
   "clientId": 13,
   "availableTags": {
     "leadTags": [
@@ -11,6 +11,7 @@
       "Clinic"
     ]
   },
+  "currentLeadTags": [],
   "selectedTag": "VIP",
   "status": "Passed"
 }

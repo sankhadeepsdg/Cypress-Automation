@@ -12,10 +12,22 @@ const reportPath = path.join(
   'mochawesome.html'
 )
 
+const markdownReportPath = path.join(
+  __dirname,
+  'cypress',
+  'reports',
+  'final',
+  'execution-summary.md'
+)
+
 async function sendReportMail() {
   try {
     if (!fs.existsSync(reportPath)) {
-      throw new Error(`Report file not found at: ${reportPath}`)
+      throw new Error(`HTML report file not found at: ${reportPath}`)
+    }
+
+    if (!fs.existsSync(markdownReportPath)) {
+      throw new Error(`Markdown report file not found at: ${markdownReportPath}`)
     }
 
     if (!process.env.REPORT_EMAIL_USER) {
@@ -51,7 +63,11 @@ async function sendReportMail() {
         <p><b>Module:</b> Outbound Campaign Automation</p>
         <p><b>Test Case:</b> End-to-End Flow</p>
 
-        <p>Please find the attached Mochawesome HTML report.</p>
+        <p>Please find the attached reports:</p>
+        <ul>
+          <li>Mochawesome HTML Report</li>
+          <li>Markdown Execution Summary</li>
+        </ul>
 
         <p>Thanks,<br>Cypress Automation</p>
       `,
@@ -59,6 +75,10 @@ async function sendReportMail() {
         {
           filename: 'mochawesome.html',
           path: reportPath
+        },
+        {
+          filename: 'execution-summary.md',
+          path: markdownReportPath
         }
       ]
     }

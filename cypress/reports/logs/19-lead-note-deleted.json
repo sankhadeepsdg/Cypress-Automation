@@ -1,7 +1,8 @@
 {
   "step": "Delete Lead Note",
-  "expectedResult": "Lead note should be deleted successfully",
-  "leadId": 4879,
-  "notesId": 232,
+  "expectedResult": "Lead note should be deleted successfully and should not exist in latest notes list",
+  "leadId": 4893,
+  "notesId": 247,
+  "deletedNoteStillExists": false,
   "status": "Passed"
 }

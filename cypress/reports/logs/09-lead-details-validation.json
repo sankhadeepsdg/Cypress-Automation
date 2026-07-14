@@ -1,8 +1,11 @@
 {
   "step": "Lead Details Validation",
-  "expectedResult": "Lead details should contain leadId, clientId, and assignedUserId",
+  "expectedResult": "Lead details should contain leadId, clientId, assignedUserId, leadStatus, leadTags, and timelineList",
   "leadIdExists": true,
   "clientIdExists": true,
   "assignedUserIdExists": true,
+  "leadStatusExists": true,
+  "leadTagsExists": true,
+  "timelineListExists": true,
   "status": "Passed"
 }

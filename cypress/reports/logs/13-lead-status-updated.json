@@ -1,8 +1,8 @@
 {
   "step": "Lead Status Update",
   "expectedResult": "Lead status should be updated successfully",
-  "leadId": 4879,
+  "leadId": 4893,
   "previousStatus": "Initial Engagement",
-  "updatedStatus": "Deal Closed",
+  "updatedStatus": "Meeting Scheduled",
   "status": "Passed"
 }
