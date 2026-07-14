@@ -1,5 +1,7 @@
 require('dotenv').config()
 const { defineConfig } = require("cypress");
+const { allureCypress } = require('allure-cypress/reporter')
+const os = require('node:os')
 const { getEmailWithRetry, replyToEmail } = require('./gmailTest/gmail');
 const { waitForAIReply } = require('./gmailTest/aiReply')
 
@@ -9,6 +11,36 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       config.env.token = process.env.TOKEN
 
+      // Allure configuration
+      allureCypress(on, config, {
+        resultsDir: 'allure-results',
+
+        environmentInfo: {
+          environment: 'Development',
+          base_url: 'https://dev.actyvate.ai',
+          api_url: 'https://devapi.actyvate.ai/v1',
+          os_platform: os.platform(),
+          os_release: os.release(),
+          node_version: process.version
+        },
+
+        globalLabels: [
+          {
+            name: 'project',
+            value: 'Actyvate'
+          },
+          {
+            name: 'framework',
+            value: 'Cypress'
+          },
+          {
+            name: 'layer',
+            value: 'E2E API Automation'
+          }
+        ]
+      })
+
+      // Existing Gmail task
       on('task', {
 
         async replyAndCheckAI({ subject }) {
