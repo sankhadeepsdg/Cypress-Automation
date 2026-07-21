@@ -10,6 +10,9 @@ module.exports = defineConfig({
     taskTimeout: 300000, // 5 minutes
     setupNodeEvents(on, config) {
       config.env.token = process.env.TOKEN
+      config.env.vbkUrl = process.env.VBK_URL
+      config.env.tlEmail = process.env.TL_EMAIL
+      config.env.tlPhone = process.env.TL_PHONE 
 
       // Allure configuration
       allureCypress(on, config, {
